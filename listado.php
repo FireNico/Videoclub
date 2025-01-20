@@ -16,7 +16,7 @@
     <?php
    
     if($_SESSION["rol"] == 2){
-        //Parte del administrador
+        //Parte del cliente
         $base = mysqli_connect("127.0.0.1", "root", "", "videoclub");
         $consulta = "SELECT p.id as id, p.titulo, p.anio, g.nombre AS genero, e.id as id_estado, e.nombre as estado from peliculas p JOIN generos g ON g.id = p.genero_id JOIN estadospeliculas e ON e.id = p.estado_id";
         $resultado =  mysqli_query($base, $consulta);
@@ -61,6 +61,48 @@
         }
         
         
+    }elseif($_SESSION["rol"] == 1){
+
+        $base = mysqli_connect("127.0.0.1", "root", "", "videoclub");
+        $consulta = "SELECT p.id as id, p.titulo, p.anio, g.nombre AS genero, e.id as id_estado, e.nombre as estado from peliculas p JOIN generos g ON g.id = p.genero_id JOIN estadospeliculas e ON e.id = p.estado_id";
+        $resultado =  mysqli_query($base, $consulta);
+        echo "<h2>Listado de películas</h2>";
+
+
+        echo "<table border='1'>";
+        echo "<tr>";
+        echo "<th>Título</th>";
+        echo "<th>Género</th>";
+        echo "<th>Año</th>";
+        echo "<th>Estado</th>";
+        echo "<th>Acciones</th>";
+        echo "</tr>";
+        while($row = mysqli_fetch_assoc($resultado)){
+            echo "<tr>";
+            echo "<td>$row[titulo]</td>";
+            echo "<td>$row[genero]</td>";
+            echo "<td>$row[anio]</td>";
+            switch($row["id_estado"]){
+
+                case 1:
+                    echo "<td style='color:green'>$row[estado]</td>";
+                    break;
+                case 2:
+                    echo "<td style='color:yellow'>$row[estado]</td>";
+                    break;
+                case 3:
+                    echo "<td style='color:red'>$row[estado]</td>";
+                    break;                    
+                case 4:
+                    echo "<td style='color:red'>$row[estado]</td>";
+                    break;                 
+
+            }
+            echo "<td><a href='gestionar.php?id=$row[id]'>Gestionar</a></td>";
+            echo "</tr>";
+        }
+
+    
     }else{
 
         header("Location: login.php");

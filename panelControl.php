@@ -18,6 +18,8 @@
         //Parte del administrador
 
         echo "<h2>Panel de control: ".$_SESSION["cargo"]."</h2>";
+        echo "<div id='opciones'><div class='opcion' id='rojo'><a href='listado.php'>Gestionar películas</div>";
+        echo "<div class='opcion' id='naranja'><a href='clientes.php'>Visualizar clientes</div></div>";
         
         }elseif($_SESSION["rol"] == 2){
         //Parte del cliente
