@@ -24,7 +24,26 @@
 
                 echo "<h1>Reservar Película</h1>";
                 
-                echo "<a href='reserva.php?id=$row[id]'><button>Reservar Película</button></a>";
+                echo "<a href='gestionarEstado.php?id=$row[id]'><button>Reservar Película</button></a>";
+            }else{
+
+                if($row["estado_id"] == 2){
+                    $reserva = "SELECT u.nombre as nombre, h.fecha_accion as fecha_accion FROM historial h JOIN usuarios u ON h.usuario_id = u.id WHERE h.pelicula_id = $_GET[id] ORDER BY h.fecha_accion DESC LIMIT 1";
+                    $historial = mysqli_query($base, $reserva);
+                    while($row = mysqli_fetch_assoc($historial)){
+                        echo "La película está reservada por $row[nombre] desde $row[fecha_accion]<br>";
+                        echo "<form action='gestionarEstado.php' method='get'>";
+                        echo "<label for='alquiler'>Fecha de Alquiler:</label><br>";
+                        echo "<input name='alquiler' type='date'><br><br>";
+                        echo "<label for='devolucion'>Fecha de Devolución:</label><br>";
+                        echo "<input name='devolucion' type='date'><br><br>";
+                        echo "<input type='submit' value='Alquilar Pelicula'>";
+                        echo "<input type='hidden' name='id' value='$_GET[id]'>";
+                        echo "</form>";
+                    }
+
+                }
+
             }
         }
         ?>

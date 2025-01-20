@@ -46,10 +46,10 @@
                     break;
                 case 3:
                     echo "<td style='color:red'>$row[estado]</td>";
-                    break;                    
+                    break;
                 case 4:
                     echo "<td style='color:red'>$row[estado]</td>";
-                    break;                 
+                    break;
 
             }
             if($row["id_estado"] == 1){
