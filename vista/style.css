@@ -95,3 +95,15 @@ footer{
     justify-content: space-evenly;
 
 }
+
+main a{
+
+    padding: 10px;
+
+}
+
+#nombre{
+    
+    padding: 0px;
+
+}

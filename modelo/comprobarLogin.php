@@ -6,7 +6,7 @@ if($connect){
 
     $contrasenya = $_POST["contra"];
     $usuario = $_POST["usuario"];
-    $consulta = "SELECT u.rol_id, u.contrasena, u.nombre AS nombre, r.nombre AS rol from usuarios u JOIN roles r  ON u.rol_id = r.id WHERE usuario = '$usuario'";
+    $consulta = "SELECT u.id as id_usuario, u.rol_id, u.contrasena, u.nombre AS nombre, r.nombre AS rol from usuarios u JOIN roles r  ON u.rol_id = r.id WHERE usuario = '$usuario'";
     $resultado =  mysqli_query($connect, $consulta);
 
     if ($row = mysqli_fetch_assoc($resultado)){
@@ -20,17 +20,18 @@ if($connect){
             $_SESSION["rol"] = $row["rol_id"];
             $_SESSION["nombre"] = $row["nombre"];
             $_SESSION["cargo"] = $row["rol"];
-            header("Location: panelControl.php");
+            $_SESSION["id"] = $row["id_usuario"];
+            header("Location: ../vista/panelControl.php");
 
        
         }else{
 
-            header("Location: login.php?error=Contraseña incorrecta");
+            header("Location: ../vista/login.php?error=Contraseña incorrecta");
         
         }
     }else{
         
-        header("Location: login.php?error=Usuario no econtrado"); 
+        header("Location: ../vista/login.php?error=Usuario no econtrado"); 
 
     }
 

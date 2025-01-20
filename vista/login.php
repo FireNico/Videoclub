@@ -13,7 +13,7 @@
     session_start();
     @session_destroy(); ?>
     <h2>Bienvenido al Videoclub</h2>
-    <form action="comprobarLogin.php" method="post">
+    <form action="../modelo/comprobarLogin.php" method="post">
             <fieldset>
             <legend>Login</legend>
             <label for="usuario">Usuario: </label>
@@ -23,7 +23,7 @@
             <input type="submit">
             <p class="error"><?php echo isset($_GET["error"])?$_GET["error"]:"";?></p>
             <a href="registro.php">Registro nuevo usuario</a><br>
-            <a href="recuperarContra.php">¿Olvidaste tu contraseña?</a>
+            <p>¿Olvidaste tu contraseña?</p>
             </fieldset>
         </form>
     </main>

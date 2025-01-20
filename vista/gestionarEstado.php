@@ -25,12 +25,12 @@
                 $reserva = "UPDATE peliculas SET estado_id = 2 WHERE id = $row[id]";
                 $update = mysqli_query($base, $reserva);
                 echo "Película reservada y registrada en el historial con éxito";
-                $insert = "INSERT INTO operaciones (usuario_id, pelicula_id, fecha_operacion) VALUES ('$_SESSION[rol]', '$row[id]', NOW())";
+                $insert = "INSERT INTO operaciones (usuario_id, pelicula_id, fecha_operacion) VALUES ('$_SESSION[id]', '$row[id]', NOW())";
                 $operacion = mysqli_query($base, $insert);
-                $codigo_operacion = "SELECT LAST_INSERT_ID() AS codigo_operacion FROM operaciones";
+                $codigo_operacion = "SELECT LAST_INSERT_ID() AS codigo_operacion, usuario_id FROM operaciones";
                 $buscar_codigo =  mysqli_query($base, $codigo_operacion);
                 if($row = mysqli_fetch_assoc($buscar_codigo)){
-                    $historial = "INSERT INTO historial(usuario_id, pelicula_id, tipo_accion_id, fecha_accion, codigo_operacion) VALUES ('$_SESSION[rol]', '$_GET[id]', 1,  NOW(), '$row[codigo_operacion]')";
+                    $historial = "INSERT INTO historial(usuario_id, pelicula_id, tipo_accion_id, fecha_accion, codigo_operacion) VALUES ('$_SESSION[id]', '$_GET[id]', 2,  NOW(), '$row[codigo_operacion]')";
                     $operacion = mysqli_query($base, $historial);
                 }
             }else{
@@ -44,7 +44,7 @@
                         $codigo_operacion = "SELECT codigo_operacion, usuario_id FROM operaciones WHERE pelicula_id = $_GET[id] ORDER BY fecha_operacion DESC LIMIT 1";
                         $buscar_codigo =  mysqli_query($base, $codigo_operacion);
                         if($row = mysqli_fetch_assoc($buscar_codigo)){
-                            $historial = "INSERT INTO historial(usuario_id, pelicula_id, tipo_accion_id, fecha_accion, fecha_prevista_devolucion, codigo_operacion) VALUES ('$row[usuario_id]', '$_GET[id]', 1,  '$_GET[alquiler]', '$_GET[devolucion]', '$row[codigo_operacion]')";
+                            $historial = "INSERT INTO historial(usuario_id, pelicula_id, tipo_accion_id, fecha_accion, fecha_prevista_devolucion, codigo_operacion) VALUES ('$row[usuario_id]', '$_GET[id]', 3,  '$_GET[alquiler]', '$_GET[devolucion]', '$row[codigo_operacion]')";
                             $operacion = mysqli_query($base, $historial);
                 }
                     }
@@ -53,7 +53,6 @@
                     $historial = mysqli_query($base, $reserva);
                     while($row = mysqli_fetch_assoc($historial)){
                         echo "La película está actualmente reservada por $row[nombre] desde ". substr($row["fecha_accion"], 0, 10)." y está prevista su devolucion el ". substr($row["fecha_devolucion"], 0, 10)."<br>";
-
                     }
 
                 }

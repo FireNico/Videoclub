@@ -20,7 +20,7 @@
         if($row = mysqli_fetch_assoc($resultado)){
 
             echo "<h2>Gestionar Película: $row[titulo] (id:$row[id])</h2>";
-            if($_SESSION["rol"] == 2){
+            if($_SESSION["rol"] == 2){ 
 
                 echo "<h1>Reservar Película</h1>";
                 
@@ -32,7 +32,7 @@
                     $historial = mysqli_query($base, $reserva);
                     while($row = mysqli_fetch_assoc($historial)){
                         echo "La película está reservada por $row[nombre] desde $row[fecha_accion]<br>";
-                        echo "<form action='gestionarEstado.php' method='get'>";
+                        echo "<form action='../vista/gestionarEstado.php' method='get'>";
                         echo "<label for='alquiler'>Fecha de Alquiler:</label><br>";
                         echo "<input name='alquiler' type='date'><br><br>";
                         echo "<label for='devolucion'>Fecha de Devolución:</label><br>";
@@ -43,6 +43,22 @@
                     }
 
                 }
+                if(@$row["estado_id"] == 3){
+
+                    $reserva = "SELECT u.nombre as nombre, h.fecha_accion as fecha_accion, h.fecha_prevista_devolucion as fecha_devolucion, u.id as id FROM historial h JOIN usuarios u ON h.usuario_id = u.id WHERE h.pelicula_id = $_GET[id] ORDER BY h.fecha_accion DESC LIMIT 1";
+                    $historial = mysqli_query($base, $reserva);
+                    while($row = mysqli_fetch_assoc($historial)){
+                        echo "La película está actualmente alquilada por <a id='nombre' href='cliente.php?id=$row[id]'>$row[nombre]</a> desde ". substr($row["fecha_accion"], 0, 10)." y está prevista su devolucion el ". substr($row["fecha_devolucion"], 0, 10)."<br>";
+
+                    }
+
+                }
+                if(@$row["estado_id"] == 1){
+
+                    echo "Aqui se puede añadir un alquile de forma manual";
+
+                }
+
 
             }
         }
