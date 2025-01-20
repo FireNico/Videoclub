@@ -10,7 +10,7 @@
 <body>
     <header>
         <h3>Sistema de gestión de Videoclub</h3>
-        <h3><?php echo "Bienvenido, ".$_SESSION["nombre"]." ";?> <a href="login.php"><img src="logout.png" alt="Cerrar sesión"></a></h3>
+        <h3><?php echo "Bienvenido, ".$_SESSION["nombre"]." ";?> <a href="login.php"><img src="logout.png" alt="Cerrar sesión" title="Cerrar sesión"></a></h3>
     </header>
     <main>
         <?php
