@@ -1,0 +1,33 @@
+body{
+
+    display: flex;
+    width: 1280px;
+    height: 800px;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+main{
+
+    text-align: center;
+
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+form label {
+    display: inline-block;
+    text-align: right; 
+
+}
+
+.error{
+
+    color:red;
+
+}
